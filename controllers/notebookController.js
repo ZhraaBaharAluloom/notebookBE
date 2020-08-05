@@ -1,9 +1,9 @@
 //Data
 const { Notebook, Collection } = require("../db/models");
 
-exports.fetchNotebook = async (notebookId, next) => {
+exports.fetchNotebook = async (notebookID, next) => {
   try {
-    const notebook = await Notenotebook.findByPk(notebookId);
+    const notebook = await Notebook.findByPk(notebookID);
     return notebook;
   } catch (error) {
     next(error);
@@ -12,8 +12,8 @@ exports.fetchNotebook = async (notebookId, next) => {
 
 exports.notebookList = async (req, res, next) => {
   try {
-    const notebooks = await Notenotebook.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+    const notebooks = await Notebook.findAll({
+      attributes: { exclude: ["collectionId", "createdAt", "updatedAt"] },
       include: [
         {
           model: Collection,
