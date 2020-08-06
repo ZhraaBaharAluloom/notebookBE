@@ -4,15 +4,7 @@ const { notebookDelete } = require("./notebookController");
 
 exports.fetchTag = async (tagID, next) => {
   try {
-    const tag = await Tag.findByPk(tagID, {
-      include: [
-        {
-          model: Notebook,
-          as: "notebook",
-          attributes: ["name", "id"],
-        },
-      ],
-    });
+    const tag = await Tag.findByPk(tagID);
     return tag;
   } catch (error) {
     next(error);

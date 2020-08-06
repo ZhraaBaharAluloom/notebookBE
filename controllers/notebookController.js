@@ -3,15 +3,7 @@ const { Notebook, Collection, Tag } = require("../db/models");
 
 exports.fetchNotebook = async (notebookID, next) => {
   try {
-    const notebook = await Notebook.findByPk(notebookID, {
-      include: [
-        {
-          model: Tag,
-          as: "tag",
-          attributes: ["name"],
-        },
-      ],
-    });
+    const notebook = await Notebook.findByPk(notebookID);
     return notebook;
   } catch (error) {
     next(error);
@@ -31,7 +23,7 @@ exports.notebookList = async (req, res, next) => {
         {
           model: Tag,
           as: "tag",
-          attributes: ["name", "notebookID"],
+          attributes: ["name"],
         },
       ],
     });
@@ -60,6 +52,7 @@ exports.createTag = async (req, res, next) => {
   try {
     req.body.notebookID = req.notebook.id;
     const newTag = await Tag.create(req.body);
+    console.log(newTag);
     res.status(201).json(newTag);
   } catch (error) {
     next(error);
