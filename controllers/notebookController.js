@@ -1,5 +1,5 @@
 //Data
-const { Notebook, Collection } = require("../db/models");
+const { Notebook, Collection, Tag } = require("../db/models");
 
 exports.fetchNotebook = async (notebookID, next) => {
   try {
@@ -16,9 +16,11 @@ exports.notebookList = async (req, res, next) => {
       attributes: { exclude: ["collectionId", "createdAt", "updatedAt"] },
       include: [
         {
+         
           model: Collection,
           as: "collection",
           attributes: ["name"],
+          
         },
       ],
     });
@@ -38,6 +40,22 @@ exports.updateNotebook = async (req, res, next) => {
     }
     await req.notebook.update(req.body);
     res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createTag = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
+
+    req.body.notebookId = req.notebook.id;
+    const newTag = await Tag.create(req.body);
+    res.status(201).json(newTag);
   } catch (error) {
     next(error);
   }

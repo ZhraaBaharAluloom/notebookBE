@@ -9,6 +9,8 @@ const {
   updateNotebook,
   notebookDelete,
   fetchNotebook,
+  createTag
+
 } = require("../controllers/notebookController");
 
 const storage = multer.diskStorage({
@@ -39,6 +41,10 @@ router.get("/", notebookList);
 
 //Notebook Update
 router.put("/:notebookID", upload.single("image"), updateNotebook);
+
+// Create tag
+router.post("/:notebookID/tags", upload.single("image"), createTag);
+
 
 //Notebook Delete
 router.delete("/:notebookID", notebookDelete);

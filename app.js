@@ -9,6 +9,8 @@ const { Notebook } = require("./db/models");
 // Routes import
 const notebookRouters = require("./routes/notebooks");
 const collectionRoutes = require("./routes/collections");
+const tagRoutes = require("./routes/tags")
+
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.use(bodyParser.json());
 //Routers
 app.use("/collections", collectionRoutes);
 app.use("/notebooks", notebookRouters);
+app.use("/tags", tagRoutes)
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 //Not Found Paths
