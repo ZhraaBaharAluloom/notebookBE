@@ -16,11 +16,15 @@ exports.notebookList = async (req, res, next) => {
       attributes: { exclude: ["collectionId", "createdAt", "updatedAt"] },
       include: [
         {
-         
           model: Collection,
           as: "collection",
           attributes: ["name"],
-          
+        },
+        {
+          model: Tag,
+          as: "tag",
+          attributes: ["name"],
+          through: "NotebookTags",
         },
       ],
     });
@@ -47,13 +51,7 @@ exports.updateNotebook = async (req, res, next) => {
 
 exports.createTag = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
-    }
-
-    req.body.notebookId = req.notebook.id;
+    req.body.notebookID = req.notebook.id;
     const newTag = await Tag.create(req.body);
     res.status(201).json(newTag);
   } catch (error) {

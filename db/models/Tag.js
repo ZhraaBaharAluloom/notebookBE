@@ -2,9 +2,9 @@ const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 const SequelizeSlugify = require("sequelize-slugify");
 
-class Tags extends Model {}
+class Tag extends Model {}
 
-Tags.init(
+Tag.init(
   {
     name: {
       type: DataTypes.STRING,
@@ -20,8 +20,8 @@ Tags.init(
   }
 );
 
-SequelizeSlugify.slugifyModel(Tags, {
+SequelizeSlugify.slugifyModel(Tag, {
   source: ["name"],
 });
 
-module.exports = Tags;
+module.exports = Tag;

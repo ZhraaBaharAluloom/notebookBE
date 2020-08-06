@@ -14,13 +14,14 @@ exports.listTag = async (req, res, next) => {
   try {
     const tags = await Tag.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
-    //   include: [
-    //     {
-    //       model: Notebook,
-    //       as: "notebooks",
-    //       attributes: ["id"],
-    //     },
-    //   ],
+      include: [
+        {
+          model: Notebook,
+          as: "notebook",
+          attributes: ["name"],
+          through: "NotebookTags",
+        },
+      ],
     });
 
     res.json(tags);
@@ -28,8 +29,6 @@ exports.listTag = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 // exports.deleteTag = async (req, res, next) => {
 //   try {

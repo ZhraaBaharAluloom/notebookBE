@@ -1,5 +1,5 @@
 //Data
-const { Collection, Notebook } = require("../db/models");
+const { Collection, Notebook, Tag } = require("../db/models");
 
 exports.fetchCollection = async (collectionId, next) => {
   try {
@@ -18,7 +18,6 @@ exports.listCollection = async (req, res, next) => {
         {
           model: Notebook,
           as: "notebooks",
-          attributes: ["id"],
         },
       ],
     });
@@ -58,8 +57,6 @@ exports.createNotebook = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 exports.updateCollection = async (req, res, next) => {
   try {

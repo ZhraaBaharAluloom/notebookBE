@@ -19,20 +19,6 @@ Notebook.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // price: {
-    //   type: DataTypes.INTEGER,
-    //   defaultValue: 20,
-    //   validate: {
-    //     min: {
-    //       args: 5,
-    //       msg: "Please enter a proper price (more than 5 KD)",
-    //     },
-    //   },
-    // },
-    // image: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
   },
   {
     sequelize: db,
