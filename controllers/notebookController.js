@@ -3,7 +3,15 @@ const { Notebook, Collection, Tag } = require("../db/models");
 
 exports.fetchNotebook = async (notebookID, next) => {
   try {
-    const notebook = await Notebook.findByPk(notebookID);
+    const notebook = await Notebook.findByPk(notebookID, {
+      include: [
+        {
+          model: Tag,
+          as: "tag",
+          attributes: ["name"],
+        },
+      ],
+    });
     return notebook;
   } catch (error) {
     next(error);
@@ -23,8 +31,7 @@ exports.notebookList = async (req, res, next) => {
         {
           model: Tag,
           as: "tag",
-          attributes: ["name"],
-          through: "NotebookTags",
+          attributes: ["name", "notebookID"],
         },
       ],
     });

@@ -1,9 +1,18 @@
 //Data
 const { Tag, Notebook } = require("../db/models");
+const { notebookDelete } = require("./notebookController");
 
-exports.fetchTag = async (tagId, next) => {
+exports.fetchTag = async (tagID, next) => {
   try {
-    const tag = await Tag.findByPk(tagId);
+    const tag = await Tag.findByPk(tagID, {
+      include: [
+        {
+          model: Notebook,
+          as: "notebook",
+          attributes: ["name", "id"],
+        },
+      ],
+    });
     return tag;
   } catch (error) {
     next(error);
@@ -13,13 +22,11 @@ exports.fetchTag = async (tagId, next) => {
 exports.listTag = async (req, res, next) => {
   try {
     const tags = await Tag.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
       include: [
         {
           model: Notebook,
           as: "notebook",
           attributes: ["name"],
-          through: "NotebookTags",
         },
       ],
     });

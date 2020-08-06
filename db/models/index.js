@@ -13,12 +13,17 @@ Collection.hasMany(Notebook, {
 Notebook.belongsTo(Collection, { as: "collection" });
 
 // Notebook has many tags
-Notebook.belongsToMany(Tag, { through: "NotebookTags", as: "tag" });
+Notebook.belongsToMany(Tag, {
+  through: "NotebookTags",
+  as: "tag",
+  foreignKey: "notebookID",
+});
 
 // tags belong to many notebooks
 Tag.belongsToMany(Notebook, {
   through: "NotebookTags",
   as: "notebook",
+  foreignKey: "tagID",
 });
 
 module.exports = {

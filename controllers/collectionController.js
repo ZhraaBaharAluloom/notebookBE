@@ -44,14 +44,16 @@ exports.createCollection = async (req, res, next) => {
 
 exports.createNotebook = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
-    }
+    // if (req.file) {
+    //   req.body.image = `${req.protocol}://${req.get("host")}/media/${
+    //     req.file.filename
+    //   }`;
+    // }
 
     req.body.collectionId = req.collection.id;
+
     const newNotebook = await Notebook.create(req.body);
+    console.log(newNotebook);
     res.status(201).json(newNotebook);
   } catch (error) {
     next(error);
