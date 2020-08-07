@@ -2,6 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 const db = require("../db");
 const { Sequelize } = require("../db");
 const SequelizeSlugify = require("sequelize-slugify");
+const { types } = require("pg");
 
 class Notebook extends Model {}
 
@@ -19,7 +20,9 @@ Notebook.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+   
   },
+  
   {
     sequelize: db,
   }

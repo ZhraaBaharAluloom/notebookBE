@@ -1,6 +1,5 @@
 //Data
 const { Tag, Notebook } = require("../db/models");
-const { notebookDelete } = require("./notebookController");
 
 exports.fetchTag = async (tagID, next) => {
   try {
@@ -21,6 +20,7 @@ exports.listTag = async (req, res, next) => {
           attributes: ["name"],
         },
       ],
+     
     });
 
     res.json(tags);
@@ -29,11 +29,3 @@ exports.listTag = async (req, res, next) => {
   }
 };
 
-// exports.deleteTag = async (req, res, next) => {
-//   try {
-//     await req.tag.destroy();
-//     res.status(204).end();
-//   } catch (error) {
-//     next(error);
-//   }
-// };

@@ -1,6 +1,7 @@
 //Data
 const { Notebook, Collection, Tag } = require("../db/models");
 
+
 exports.fetchNotebook = async (notebookID, next) => {
   try {
     const notebook = await Notebook.findByPk(notebookID);
@@ -19,13 +20,20 @@ exports.notebookList = async (req, res, next) => {
           model: Collection,
           as: "collection",
           attributes: ["name"],
+          
         },
+       
         {
           model: Tag,
           as: "tag",
           attributes: ["name"],
         },
       ],
+      // through: {
+      //   model: NotebookTags,
+      //   attributes: ["notebookID"]
+
+      // },
     });
 
     res.json(notebooks);
@@ -50,9 +58,10 @@ exports.updateNotebook = async (req, res, next) => {
 
 exports.createTag = async (req, res, next) => {
   try {
-    req.body.notebookID = req.notebook.id;
+    // req.body.notebookID = req.notebook.id;
     const newTag = await Tag.create(req.body);
     console.log(newTag);
+    console.log("exports.createTag -> newTag", newTag)
     res.status(201).json(newTag);
   } catch (error) {
     next(error);
